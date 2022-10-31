@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class InsertEditFragment extends Fragment {
 
@@ -160,13 +161,11 @@ public class InsertEditFragment extends Fragment {
 
 
         uploadButton.setOnClickListener(view12 -> {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.setType("*/*");
             String[] extraMimeTypes = {"application/pdf", "application/msword"};
             intent.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
             intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             //starts new activity to select file and return data
 //                startActivityForResult(Intent.createChooser(intent,"Choose File to Upload.."),PICK_FILE_REQUEST);
             uploadIntent.launch(intent);
@@ -219,6 +218,7 @@ public class InsertEditFragment extends Fragment {
                         fileUri=u.getResumeUri();
                         saveButton.setText(R.string.btn_update_text);
                         saveButton.setBackgroundTintList( AppCompatResources.getColorStateList(requireContext(), android.R.color.holo_orange_light));
+                        uploadButton.setText(Utils.getFileNameFromUri(requireActivity().getContentResolver(),fileUri));
                         break;
                     }
                 }

@@ -63,6 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     Intent intent = new Intent(Intent.ACTION_VIEW, user.getResumeUri());
                     String mimeTypeInfo=context.getContentResolver().getType(user.getResumeUri());
                     intent.setDataAndType(user.getResumeUri(),mimeTypeInfo);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     try{
                         context.startActivity(intent);
                     }catch (ActivityNotFoundException e)
